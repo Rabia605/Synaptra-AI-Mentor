@@ -2,7 +2,11 @@ from itertools import zip_longest
 import streamlit as st
 from streamlit_chat import message
 from langchain_openai import ChatOpenAI  # correct import
+<<<<<<< HEAD
 from langchain_core.messages import SystemMessage, HumanMessage, AIMessage
+=======
+from langchain.schema import SystemMessage, HumanMessage, AIMessage
+>>>>>>> 3d86795a61222f99bd124f7d0ecce620e72b63de
 
 # --- Load API key and base URL from Streamlit secrets ---
 openai_api_key = st.secrets["OPENROUTER_API_KEY"]
@@ -23,10 +27,17 @@ if "entered_prompt" not in st.session_state:
 
 # --- Initialize ChatOpenAI with OpenRouter ---
 chat = ChatOpenAI(
+<<<<<<< HEAD
     model="openrouter/free",  # you can change to any model supported by OpenRouter
     temperature=0.5,
     api_key=openai_api_key,
     base_url=openai_api_base
+=======
+    model="mistralai/mistral-7b-instruct",  # you can change to any model supported by OpenRouter
+    temperature=0.5,
+    openai_api_key=openai_api_key,
+    openai_api_base=openai_api_base
+>>>>>>> 3d86795a61222f99bd124f7d0ecce620e72b63de
 )
 
 # --- Build message history ---
@@ -58,7 +69,11 @@ Remember, your primary goal is to assist and educate students in the field of Ar
 # --- Generate AI Response ---
 def generate_response():
     zipped_messages = build_message_list()
+<<<<<<< HEAD
     ai_response = chat.invoke(zipped_messages)
+=======
+    ai_response = chat(zipped_messages)
+>>>>>>> 3d86795a61222f99bd124f7d0ecce620e72b63de
     return ai_response.content
 
 # --- Handle input submission ---
@@ -78,6 +93,12 @@ if st.session_state.entered_prompt != "":
 
 # --- Display chat history ---
 if st.session_state["generated"]:
+<<<<<<< HEAD
     for i in range(len(st.session_state["generated"])):
         message(st.session_state["past"][i], is_user=True, key=str(i) + "_user")
         message(st.session_state["generated"][i], key=str(i))
+=======
+    for i in range(len(st.session_state["generated"]) - 1, -1, -1):
+        message(st.session_state["generated"][i], key=str(i))
+        message(st.session_state["past"][i], is_user=True, key=str(i) + "_user")
+>>>>>>> 3d86795a61222f99bd124f7d0ecce620e72b63de
